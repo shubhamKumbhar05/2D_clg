@@ -1,0 +1,162 @@
+// const canvas = document.getElementById("gameCanvas");
+// const ctx = canvas.getContext("2d");
+
+// let socket;
+// let username;
+// let players = {};
+// let keys = {};
+// let lastEmitTime = 0;
+// let mobileDir = { up: false, down: false, left: false, right: false };
+
+// // Chat
+// let chatInput = document.getElementById("chatInput");
+// let sendBtn = document.getElementById("sendBtn");
+
+// function join() {
+//   username = document.getElementById("username").value.trim();
+//   if (!username) return alert("Please enter your name");
+
+//   document.getElementById("login").style.display = "none";
+//   document.getElementById("mobile-controls").style.display = "flex";
+//   document.getElementById("chatBox").style.display = "flex";
+//   canvas.style.display = "block";
+
+//   socket = io();
+
+//   socket.emit("new-player", username);
+
+//   socket.on("players", (data) => {
+//     players = { ...players, ...data };
+//   });
+  
+
+// //   socket.on("update-player", (id, position) => {
+// //     if (players[id]) {
+// //       players[id].x = position.x;
+// //       players[id].y = position.y;
+// //     }
+// //   });
+
+//     // socket.on("update-player", (id, position) => {
+//     //     if (!players[id]) {
+//     //     players[id] = position;
+//     //     }
+//     // });
+
+//     socket.on("update-player", (id, position) => {
+//         if (!players[id]) {
+//           players[id] = position;
+//         } else {
+//           players[id].x = position.x;
+//           players[id].y = position.y;
+//         }
+//       });
+      
+  
+
+//   socket.on("remove-player", (id) => {
+//     delete players[id];
+//   });
+
+//   socket.on("chat-message", ({ id, message }) => {
+//     if (players[id]) {
+//       players[id].chat = message;
+//       setTimeout(() => {
+//         if (players[id]) delete players[id].chat;
+//       }, 3000);
+//     }
+//   });
+
+//   document.addEventListener("keydown", (e) => keys[e.key] = true);
+//   document.addEventListener("keyup", (e) => keys[e.key] = false);
+
+//   gameLoop();
+// }
+
+// function updatePosition() {
+//   const player = players[socket.id];
+//   if (!player) return;
+
+//   let moved = false;
+//   const speed = 2;
+//   const size = 30;
+
+//   if ((keys["ArrowUp"] || mobileDir.up) && player.y > 0) {
+//     player.y -= speed;
+//     moved = true;
+//   }
+//   if ((keys["ArrowDown"] || mobileDir.down) && player.y + size < canvas.height) {
+//     player.y += speed;
+//     moved = true;
+//   }
+//   if ((keys["ArrowLeft"] || mobileDir.left) && player.x > 0) {
+//     player.x -= speed;
+//     moved = true;
+//   }
+//   if ((keys["ArrowRight"] || mobileDir.right) && player.x + size < canvas.width) {
+//     player.x += speed;
+//     moved = true;
+//   }
+
+//   const now = Date.now();
+//   if (moved && now - lastEmitTime > 50) {
+//     lastEmitTime = now;
+//     socket.emit("move", { x: player.x, y: player.y });
+//   }
+// }
+
+// function drawSubjects() {
+//   ctx.fillStyle = "#f0f8ff";
+//   ctx.fillRect(50, 50, 200, 150); // Math
+//   ctx.fillStyle = "black";
+//   ctx.fillText("Math", 130, 45);
+
+//   ctx.fillStyle = "#e6ffe6";
+//   ctx.fillRect(300, 50, 200, 150); // Science
+//   ctx.fillStyle = "black";
+//   ctx.fillText("Science", 370, 45);
+
+//   ctx.fillStyle = "#fff5cc";
+//   ctx.fillRect(550, 50, 200, 150); // English
+//   ctx.fillStyle = "black";
+//   ctx.fillText("English", 630, 45);
+// }
+
+// function gameLoop() {
+//   updatePosition();
+//   ctx.clearRect(0, 0, canvas.width, canvas.height);
+//   drawSubjects();
+
+//   for (let id in players) {
+//     const p = players[id];
+//     ctx.beginPath();
+//     ctx.fillStyle = id === socket.id ? "#2196f3" : "#4caf50";
+//     ctx.arc(p.x + 15, p.y + 15, 15, 0, Math.PI * 2);
+//     ctx.fill();
+//     ctx.closePath();
+
+//     ctx.fillStyle = "black";
+//     ctx.font = "14px Arial";
+//     ctx.textAlign = "center";
+//     ctx.fillText(p.username, p.x + 15, p.y - 5);
+
+//     if (p.chat) {
+//       ctx.fillStyle = "#ffffffcc";
+//       ctx.fillRect(p.x - 10, p.y - 30, p.chat.length * 7, 20);
+//       ctx.strokeRect(p.x - 10, p.y - 30, p.chat.length * 7, 20);
+//       ctx.fillStyle = "black";
+//       ctx.fillText(p.chat, p.x + 15, p.y - 15);
+//     }
+//   }
+
+//   requestAnimationFrame(gameLoop);
+// }
+
+// // Chat system
+// sendBtn.onclick = () => {
+//   const msg = chatInput.value.trim();
+//   if (msg) {
+//     socket.emit("chat-message", msg);
+//     chatInput.value = "";
+//   }
+// };
