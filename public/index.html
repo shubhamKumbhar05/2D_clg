@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>2D Classroom Multiplayer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="login">
+      <h2>Enter Your Name</h2>
+      <input type="text" id="username" />
+      <button onclick="join()">Join</button>
+    </div>
+  
+    <canvas id="gameCanvas" width="800" height="600" style="display: none;"></canvas>
+  
+    <div id="mobile-controls" style="display: none;">
+      <button onmousedown="mobileDir.up = true" onmouseup="mobileDir.up = false" ontouchstart="mobileDir.up = true" ontouchend="mobileDir.up = false">⬆</button>
+      <div>
+        <button onmousedown="mobileDir.left = true" onmouseup="mobileDir.left = false" ontouchstart="mobileDir.left = true" ontouchend="mobileDir.left = false">⬅</button>
+        <button onmousedown="mobileDir.right = true" onmouseup="mobileDir.right = false" ontouchstart="mobileDir.right = true" ontouchend="mobileDir.right = false">➡</button>
+      </div>
+      <button onmousedown="mobileDir.down = true" onmouseup="mobileDir.down = false" ontouchstart="mobileDir.down = true" ontouchend="mobileDir.down = false">⬇</button>
+    </div>
+  
+    <div id="chatBox" style="display: none;">
+      <input type="text" id="chatInput" placeholder="Say something..." />
+      <button id="sendBtn">Send</button>
+    </div>
+  
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+  </body>
+  
+  
+</html>
